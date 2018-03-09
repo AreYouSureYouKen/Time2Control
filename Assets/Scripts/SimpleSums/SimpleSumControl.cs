@@ -85,7 +85,7 @@ public class SimpleSumControl : MonoBehaviour {
         {
             case 1:
                 correctanswers = _sumblock1.CheckAnswers();
-                if (correctanswers == 45)
+                if (correctanswers >= 43)
                 {
                     _phaseControl.UpdatePhase();
                 }
@@ -102,7 +102,7 @@ public class SimpleSumControl : MonoBehaviour {
                 break;
             case 2:
                 correctanswers = _sumblock2.CheckAnswers();
-                if (correctanswers == 45)
+                if (correctanswers >= 43)
                 {
                     _phaseControl.UpdatePhase();
                 }

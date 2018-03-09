@@ -65,21 +65,21 @@ public class MindMapControl : MonoBehaviour {
         Debug.Log(allTrue);
         if (!allTrue)
         {
-            if (timesControlled == 2)
+            if (timesControlled == 1)
             {
                 foreach (MindmapWordTarget mwt in _firstTargets)
                 {
                     mwt.AutoComplete();
                 }
             }
-            if (timesControlled == 4)
+            if (timesControlled == 2)
             {
                 foreach (MindmapWordTarget mwt in _secondTargets)
                 {
                     mwt.AutoComplete();
                 }
             }
-            if (timesControlled == 6)
+            if (timesControlled == 3)
             {
                 foreach(MindmapWordTarget mwt in _thirdTargets)
                 {

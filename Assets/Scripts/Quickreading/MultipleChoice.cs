@@ -268,7 +268,7 @@ public class MultipleChoice : MonoBehaviour {
         yield return new WaitForSeconds(time);
         
         _notificationPanel.SetActive(true);
-        startPhase();
+        PressedContinue();
         // do logic for restarting the text?
     }
 

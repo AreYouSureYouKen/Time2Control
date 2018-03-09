@@ -43,7 +43,7 @@ public class MindmapWordTarget : MonoBehaviour {
                 }
                 if (!correct)
                 {
-                    tc.ResetToStart();
+                    tc.ResetFromCheck();
                     allTrue = false;
                 }
             }
@@ -53,7 +53,7 @@ public class MindmapWordTarget : MonoBehaviour {
 
     public void AutoComplete()
     {
-        if(!CheckWords())
+        //if(!CheckWords())
         _autoCompleteTarget.AutoComplete(this.gameObject);
     }
 }

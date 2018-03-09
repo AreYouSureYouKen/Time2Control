@@ -67,13 +67,14 @@ public class PhaseControl : MonoBehaviour {
     {
         if (_bypass)
         {
-            _phase = 0;
+            _phase = 5;
             loginObject.SetActive(false);
             StartPhase(_phase);
         }
         else
         {
-            string loginstring = "http://www.time2control.nl/Time2Game/login.php?login=" + code.text;
+            string loginstring = "https://www.time2control.nl/Time2Game/login.php?login=" + code.text;
+            Debug.Log(loginstring);
             StartCoroutine(MakeCall(loginstring, true,false,false));
         }
     }
@@ -90,20 +91,20 @@ public class PhaseControl : MonoBehaviour {
             _phase++;
             float endTime = Time.time;
             float timeTaken = Mathf.Round(endTime - _startTime);
-            string PhaseCode = "http://www.time2control.nl/Time2Game/login.php?logincode=" + logincode + "&savePhase=" + _phase+"&timePhase="+timeTaken+"&name="+_nameField.text;
+            string PhaseCode = "https://www.time2control.nl/Time2Game/login.php?logincode=" + logincode + "&savePhase=" + _phase+"&timePhase="+timeTaken+"&name="+_nameField.text;
             StartCoroutine(MakeCall(PhaseCode, false,true,false));
         }
     }
 
     public void saveName()
     {
-        string nameCode = "http://www.time2control.nl/Time2Game/login.php?saveName=" + _nameField.text + "&nameLogin=" + code.text+"&mentorName="+_trainerMentorField.text;
+        string nameCode = "https://www.time2control.nl/Time2Game/login.php?saveName=" + _nameField.text + "&nameLogin=" + code.text+"&mentorName="+_trainerMentorField.text;
         StartCoroutine(MakeCall(nameCode, false, false, false));
     }
 
     public void GetEndPhase()
     {
-        string endPhaseCode = "http://www.time2control.nl/Time2Game/login.php?completePhase=" + code.text;
+        string endPhaseCode = "https://www.time2control.nl/Time2Game/login.php?completePhase=" + code.text;
         StartCoroutine(MakeCall(endPhaseCode, false, false, true));
     }
 
@@ -116,6 +117,7 @@ public class PhaseControl : MonoBehaviour {
 
     private void GetReturnCall(WWW result,bool isLogin, bool isUpdate,bool isEndPhase)
     {
+        Debug.Log(result.text);
         if (isLogin)
         {
             string resultstring = result.text;

@@ -116,4 +116,12 @@ public class TextCollider : MonoBehaviour, IDragHandler, IBeginDragHandler , IEn
         this.transform.SetParent(_parent, true);
         StartCoroutine(MoveToOrigin(_beginPos, 0.5f));
     }
+
+    public void ResetFromCheck()
+    {
+        GetText().raycastTarget = true;
+        this.transform.SetParent(_parent, true);
+        this.transform.localPosition = _beginPos;
+        this.transform.rotation = Quaternion.identity;
+    }
 }
