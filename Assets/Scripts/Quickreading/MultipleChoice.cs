@@ -42,8 +42,6 @@ public class MultipleChoice : MonoBehaviour {
     private InputField _wordsPerMinField;
     private int _wordsPerMin;
     [SerializeField]
-    private GameObject _startPanel;
-    [SerializeField]
     private bool _multipleQuestions;
     [SerializeField]
     private int _numberofQuestions = 5;
@@ -89,8 +87,7 @@ public class MultipleChoice : MonoBehaviour {
     public void SetUp()
     {
         startPhase();
-        _startPanel.SetActive(true);
-        
+        _wordsPerMinPanel.SetActive(true);
     }
 
     public void startPhase()
@@ -126,13 +123,6 @@ public class MultipleChoice : MonoBehaviour {
 
         _currentQuestion++;
         UncheckToggles();
-    }
-
-    public void EnteredName()
-    {
-        _phaseControl.saveName();
-        _startPanel.SetActive(false);
-        _wordsPerMinPanel.SetActive(true);
     }
 
     public void CheckAnswer()

@@ -9,10 +9,13 @@ public class PhaseControl : MonoBehaviour {
     private string logincode;
     private int _phase;
     private string _personName;
+    private string _personLastName;
     [SerializeField]
     private InputField _nameField;
     [SerializeField]
-    private InputField _trainerMentorField;
+    private InputField _personLastNameField;
+    [SerializeField]
+    private Button _continueButton;
     private GameObject _currentPhaseObject = null;
     [SerializeField]
     private InputField code;
@@ -20,6 +23,10 @@ public class PhaseControl : MonoBehaviour {
     private GameObject loginObject;
     [SerializeField]
     private GameObject _wrongPasswordPanel;
+    [SerializeField]
+    private GameObject _menuChoices;
+    [SerializeField]
+    private GameObject _inputNamePanel;
     [SerializeField]
     private bool _bypass;
     [SerializeField]
@@ -96,9 +103,9 @@ public class PhaseControl : MonoBehaviour {
         }
     }
 
-    public void saveName()
+    public void saveName(string newgame = "false")
     {
-        string nameCode = "https://www.time2control.nl/Time2Game/login.php?saveName=" + _nameField.text + "&nameLogin=" + code.text+"&mentorName="+_trainerMentorField.text;
+        string nameCode = "https://www.time2control.nl/Time2Game/login.php?saveName=" + _nameField.text + "&nameLogin=" + code.text+"&lastName="+_personLastNameField.text+"&continue="+newgame;
         StartCoroutine(MakeCall(nameCode, false, false, false));
     }
 
@@ -123,14 +130,23 @@ public class PhaseControl : MonoBehaviour {
             string resultstring = result.text;
             string[] splitted = resultstring.Split(';');
 
-            if (splitted.Length == 2)
+            if (splitted.Length >= 2)
             {
                 loginObject.SetActive(false);
                 Debug.Log("logged in, phase is " + splitted[1]);
                 logincode = splitted[0];
                 if(int.TryParse(splitted[1],out _phase))
                 {
-                    StartPhase(_phase);
+                    if(splitted.Length > 3)
+                    {
+                        _nameField.text = splitted[2];
+                        _personLastNameField.text = splitted[3];
+                    }
+                    if(_phase > 0)
+                    {
+                        _continueButton.interactable = true;
+                    }
+                    OpenGameMenu();
                 }
                 else
                 {
@@ -151,6 +167,39 @@ public class PhaseControl : MonoBehaviour {
             EndPhase(result.text);
         }
         // else there is no return value so ignore this.
+    }
+
+    public void StartNewGame()
+    {
+        if (!string.IsNullOrEmpty(_nameField.text) && !string.IsNullOrEmpty(_personLastNameField.text))
+        {
+            saveName("true");
+            _menuChoices.SetActive(false);
+            StartPhase(0);
+        }
+        else
+        {
+            _inputNamePanel.SetActive(true);
+        }
+    }
+
+    public void ContinueGame()
+    {
+        if (!string.IsNullOrEmpty(_nameField.text) && !string.IsNullOrEmpty(_personLastNameField.text))
+        {
+            saveName();
+            _menuChoices.SetActive(false);
+            StartPhase(_phase);
+        }
+        else
+        {
+            _inputNamePanel.SetActive(true);
+        }
+    }
+
+    public void OpenGameMenu()
+    {
+        _menuChoices.SetActive(true);
     }
 
     private void EndPhase(string resultstring)
